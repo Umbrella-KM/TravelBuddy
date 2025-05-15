@@ -11,6 +11,7 @@ import { ItineraryForm } from "@shared/schema";
 import { GeneratedItinerary } from "@/types/itinerary";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
+import { MapPin, Plane, DollarSign, Calendar, Compass, Utensils, Hotel, Camera } from "lucide-react";
 
 // Steps in the trip planning process
 enum PlannerStep {
@@ -106,30 +107,35 @@ export default function Home() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 bg-gradient-to-b from-blue-50 to-white">
       {/* Hero Section */}
       <section className="mb-12 text-center">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900 mb-4">
-          Plan Your Dream Trip Within Budget
+        <div className="animate-bounce inline-block mb-4">
+          <Plane className="h-16 w-16 text-primary" />
+        </div>
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900 mb-4 animate-fadeIn">
+          Adventure Awaits! Plan Your Dream Trip
         </h1>
         <p className="text-lg text-neutral-600 max-w-2xl mx-auto mb-8">
           Enter your destination and budget to get a complete itinerary with accommodations, 
-          dining options, attractions, and more.
+          dining options, attractions, and more. Let's make your travel dreams come true! ✨
         </p>
         <div className="flex justify-center">
           <Button 
-            className="px-6 py-3" 
+            className="px-6 py-3 bg-gradient-to-r from-primary to-blue-600 hover:from-primary hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1" 
             size="lg" 
             onClick={() => document.getElementById('planner')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            Start Planning <i className="fas fa-arrow-right ml-2"></i>
+            Start Your Adventure <i className="fas fa-arrow-right ml-2"></i>
           </Button>
         </div>
       </section>
 
       {/* Trip Planner Section */}
-      <section id="planner" className="bg-white rounded-xl shadow-md p-6 mb-12">
-        <h2 className="text-2xl font-semibold text-neutral-900 mb-6">Create Your Itinerary</h2>
+      <section id="planner" className="bg-white rounded-xl shadow-md p-6 mb-12 border-2 border-blue-100">
+        <h2 className="text-2xl font-semibold text-neutral-900 mb-6 flex items-center">
+          <Compass className="h-6 w-6 text-primary mr-2" /> Create Your Adventure
+        </h2>
         
         {/* Progress Tracker */}
         <div className="mb-8">
@@ -180,7 +186,7 @@ export default function Home() {
 
         {/* Loading State */}
         {generateItineraryMutation.isPending && (
-          <LoadingState message="Creating Your Perfect Itinerary" />
+          <LoadingState message="Creating Your Perfect Adventure" />
         )}
 
         {/* Step 3: Generated Itinerary */}
@@ -195,12 +201,14 @@ export default function Home() {
 
       {/* Features Section */}
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold text-neutral-900 text-center mb-8">Why Plan With TravelPlan</h2>
+        <h2 className="text-2xl font-semibold text-neutral-900 text-center mb-8 flex items-center justify-center">
+          <Camera className="h-6 w-6 text-primary mr-2" /> Why Plan With TravelBuddy
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <Card className="bg-white">
+          <Card className="bg-white border-2 border-blue-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
             <CardContent className="p-6">
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                <i className="fas fa-dollar-sign text-primary text-xl"></i>
+                <DollarSign className="text-primary text-xl" />
               </div>
               <h3 className="text-xl font-medium text-neutral-900 mb-2">Budget-Friendly Planning</h3>
               <p className="text-neutral-600">
@@ -210,28 +218,28 @@ export default function Home() {
             </CardContent>
           </Card>
           
-          <Card className="bg-white">
+          <Card className="bg-white border-2 border-blue-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
             <CardContent className="p-6">
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                <i className="fas fa-lightbulb text-primary text-xl"></i>
+                <Utensils className="text-primary text-xl" />
               </div>
-              <h3 className="text-xl font-medium text-neutral-900 mb-2">Personalized Recommendations</h3>
+              <h3 className="text-xl font-medium text-neutral-900 mb-2">Foodie Paradise</h3>
               <p className="text-neutral-600">
-                Get customized suggestions based on your preferences, travel style, and interests, 
-                not generic tourist traps.
+                Discover the best local eateries with our Yelp integration. From street food to fine dining,
+                we've got your taste buds covered!
               </p>
             </CardContent>
           </Card>
           
-          <Card className="bg-white">
+          <Card className="bg-white border-2 border-blue-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
             <CardContent className="p-6">
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                <i className="fas fa-map-marked-alt text-primary text-xl"></i>
+                <MapPin className="text-primary text-xl" />
               </div>
-              <h3 className="text-xl font-medium text-neutral-900 mb-2">Complete Itineraries</h3>
+              <h3 className="text-xl font-medium text-neutral-900 mb-2">Easy Navigation</h3>
               <p className="text-neutral-600">
-                Everything in one place - accommodations, meals, attractions, and transportation, 
-                all organized by day and optimized for efficiency.
+                Every location comes with Google Maps integration, so you'll never get lost.
+                Just click and go!
               </p>
             </CardContent>
           </Card>
@@ -240,9 +248,9 @@ export default function Home() {
 
       {/* Testimonials Section */}
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold text-neutral-900 text-center mb-8">What Travelers Say</h2>
+        <h2 className="text-2xl font-semibold text-neutral-900 text-center mb-8">What Happy Travelers Say</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="bg-white">
+          <Card className="bg-white border-2 border-blue-100 hover:shadow-lg transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-start mb-4">
                 <div className="w-12 h-12 rounded-full bg-neutral-200 mr-4 flex items-center justify-center overflow-hidden">
@@ -261,14 +269,14 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-neutral-600">
-                "TravelPlan saved me hours of research for my Tokyo trip. The budget breakdown was spot on, 
+                "TravelBuddy saved me hours of research for my Tokyo trip. The budget breakdown was spot on, 
                 and I loved how it suggested local dining spots I would have never found on my own. 
                 Every day was perfectly balanced between sightseeing and relaxation."
               </p>
             </CardContent>
           </Card>
           
-          <Card className="bg-white">
+          <Card className="bg-white border-2 border-blue-100 hover:shadow-lg transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-start mb-4">
                 <div className="w-12 h-12 rounded-full bg-neutral-200 mr-4 flex items-center justify-center overflow-hidden">
@@ -288,7 +296,7 @@ export default function Home() {
               </div>
               <p className="text-neutral-600">
                 "As a budget traveler, I was skeptical that an app could really help me save money while having a great experience. 
-                TravelPlan proved me wrong. My Barcelona trip came in under budget, and I didn't feel like I missed out on anything!"
+                TravelBuddy proved me wrong. My Barcelona trip came in under budget, and I didn't feel like I missed out on anything!"
               </p>
             </CardContent>
           </Card>
@@ -296,15 +304,19 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-primary text-white rounded-xl p-8 text-center mb-12">
-        <h2 className="text-2xl font-semibold mb-4">Ready to plan your dream trip?</h2>
+      <section className="bg-gradient-to-r from-primary to-blue-600 text-white rounded-xl p-8 text-center mb-12 shadow-lg">
+        <div className="animate-pulse inline-block mb-4">
+          <Plane className="h-12 w-12 text-white" />
+        </div>
+        <h2 className="text-2xl font-semibold mb-4">Ready for your next adventure?</h2>
         <p className="mb-6 max-w-2xl mx-auto">
           Create your personalized travel itinerary in minutes and start exploring the world without breaking the bank.
+          Your dream vacation is just a few clicks away!
         </p>
         <Button 
           variant="secondary" 
           size="lg" 
-          className="px-8 py-3 bg-white text-primary hover:bg-neutral-100"
+          className="px-8 py-3 bg-white text-primary hover:bg-neutral-100 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
           onClick={() => document.getElementById('planner')?.scrollIntoView({ behavior: 'smooth' })}
         >
           Start Planning Now <i className="fas fa-arrow-right ml-2"></i>

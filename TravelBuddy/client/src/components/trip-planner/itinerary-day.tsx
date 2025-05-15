@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ItineraryDay as ItineraryDayType } from "@/types/itinerary";
-import { ChevronDown, ChevronUp, Bed, Utensils, MapPin, Euro } from "lucide-react";
+import { ChevronDown, ChevronUp, Bed, Utensils, MapPin, Euro, ExternalLink } from "lucide-react";
 
 interface ItineraryDayProps {
   day: ItineraryDayType;
@@ -71,6 +71,17 @@ export function ItineraryDay({ day, isOpen = false }: ItineraryDayProps) {
                       </div>
                       <span className="text-xs text-neutral-600 ml-1">({Math.floor(Math.random() * 300) + 50} reviews)</span>
                     </div>
+                    {day.accommodation.googleMapsUrl && (
+                      <a 
+                        href={day.accommodation.googleMapsUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-xs text-blue-600 flex items-center mt-2 hover:underline"
+                      >
+                        <MapPin className="h-3 w-3 mr-1" /> View on Google Maps
+                        <ExternalLink className="h-3 w-3 ml-1" />
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
@@ -87,6 +98,28 @@ export function ItineraryDay({ day, isOpen = false }: ItineraryDayProps) {
                       <div>
                         <div className="font-medium">{meal.name}</div>
                         <div className="text-sm text-neutral-600">{meal.type.charAt(0).toUpperCase() + meal.type.slice(1)} - {meal.description}</div>
+                        {meal.googleMapsUrl && (
+                          <a 
+                            href={meal.googleMapsUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="text-xs text-blue-600 flex items-center mt-1 hover:underline"
+                          >
+                            <MapPin className="h-3 w-3 mr-1" /> View on Google Maps
+                            <ExternalLink className="h-3 w-3 ml-1" />
+                          </a>
+                        )}
+                        {meal.yelpUrl && (
+                          <a 
+                            href={meal.yelpUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="text-xs text-orange-500 flex items-center mt-1 hover:underline"
+                          >
+                            <i className="fab fa-yelp mr-1"></i> View on Yelp
+                            <ExternalLink className="h-3 w-3 ml-1" />
+                          </a>
+                        )}
                       </div>
                       <div className="text-sm text-orange-500 font-medium">{formatCurrency(meal.cost)}</div>
                     </div>
@@ -118,6 +151,17 @@ export function ItineraryDay({ day, isOpen = false }: ItineraryDayProps) {
                         </div>
                         <div className="text-xs bg-neutral-100 px-2 py-1 rounded">{activity.duration}</div>
                       </div>
+                      {activity.googleMapsUrl && (
+                        <a 
+                          href={activity.googleMapsUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-xs text-blue-600 flex items-center mt-2 hover:underline"
+                        >
+                          <MapPin className="h-3 w-3 mr-1" /> View on Google Maps
+                          <ExternalLink className="h-3 w-3 ml-1" />
+                        </a>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -139,6 +183,18 @@ export function ItineraryDay({ day, isOpen = false }: ItineraryDayProps) {
                 <MapPin className="text-neutral-600 mr-1 h-4 w-4" />
                 <span>Main Area: <strong>{day.activities[0]?.name || 'Various Locations'}</strong></span>
               </div>
+              {day.transportation && day.transportation.googleMapsUrl && (
+                <a 
+                  href={day.transportation.googleMapsUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="bg-white border border-neutral-200 rounded-lg px-3 py-1 flex items-center hover:bg-neutral-50"
+                >
+                  <i className="fas fa-bus text-neutral-600 mr-1"></i>
+                  <span>Local Transit</span>
+                  <ExternalLink className="h-3 w-3 ml-1 text-neutral-600" />
+                </a>
+              )}
             </div>
           </div>
         </div>
