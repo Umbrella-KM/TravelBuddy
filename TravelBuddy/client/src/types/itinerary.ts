@@ -5,6 +5,10 @@ export interface Meal {
   name: string;
   description: string;
   cost: number;
+  googleMapsUrl?: string;
+  imageUrl?: string;
+  rating?: number;
+  reviewCount?: number;
 }
 
 export interface Activity {
@@ -13,6 +17,12 @@ export interface Activity {
   cost: number;
   duration: string;
   imageUrl?: string;
+  googleMapsUrl?: string;
+  coordinates?: {
+    latitude: number;
+    longitude: number;
+  };
+  tags?: string[];
 }
 
 export interface Accommodation {
@@ -21,12 +31,19 @@ export interface Accommodation {
   costPerNight: number;
   rating: number;
   imageUrl: string;
+  googleMapsUrl?: string;
+  coordinates?: {
+    latitude: number;
+    longitude: number;
+  };
+  bookingInfo?: any;
 }
 
 export interface Transportation {
   type: string;
   description: string;
   cost: number;
+  googleMapsUrl?: string;
 }
 
 export interface ItineraryDay {

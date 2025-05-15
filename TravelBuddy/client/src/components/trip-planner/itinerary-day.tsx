@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ItineraryDay as ItineraryDayType } from "@/types/itinerary";
-import { ChevronDown, ChevronUp, Bed, Utensils, MapPin, Euro } from "lucide-react";
+import { ChevronDown, ChevronUp, Bed, Utensils, MapPin, Euro, ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface ItineraryDayProps {
   day: ItineraryDayType;
@@ -71,6 +72,19 @@ export function ItineraryDay({ day, isOpen = false }: ItineraryDayProps) {
                       </div>
                       <span className="text-xs text-neutral-600 ml-1">({Math.floor(Math.random() * 300) + 50} reviews)</span>
                     </div>
+                    {day.accommodation.googleMapsUrl && (
+                      <div className="mt-2">
+                        <a 
+                          href={day.accommodation.googleMapsUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center text-xs text-primary hover:underline"
+                        >
+                          <MapPin className="h-3 w-3 mr-1" /> View on Google Maps
+                          <ExternalLink className="h-3 w-3 ml-1" />
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -90,6 +104,19 @@ export function ItineraryDay({ day, isOpen = false }: ItineraryDayProps) {
                       </div>
                       <div className="text-sm text-orange-500 font-medium">{formatCurrency(meal.cost)}</div>
                     </div>
+                    {meal.googleMapsUrl && (
+                      <div className="mt-2">
+                        <a 
+                          href={meal.googleMapsUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center text-xs text-primary hover:underline"
+                        >
+                          <MapPin className="h-3 w-3 mr-1" /> View on Google Maps
+                          <ExternalLink className="h-3 w-3 ml-1" />
+                        </a>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -118,6 +145,19 @@ export function ItineraryDay({ day, isOpen = false }: ItineraryDayProps) {
                         </div>
                         <div className="text-xs bg-neutral-100 px-2 py-1 rounded">{activity.duration}</div>
                       </div>
+                      {activity.googleMapsUrl && (
+                        <div className="mt-2">
+                          <a 
+                            href={activity.googleMapsUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center text-xs text-primary hover:underline"
+                          >
+                            <MapPin className="h-3 w-3 mr-1" /> View on Google Maps
+                            <ExternalLink className="h-3 w-3 ml-1" />
+                          </a>
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -139,6 +179,18 @@ export function ItineraryDay({ day, isOpen = false }: ItineraryDayProps) {
                 <MapPin className="text-neutral-600 mr-1 h-4 w-4" />
                 <span>Main Area: <strong>{day.activities[0]?.name || 'Various Locations'}</strong></span>
               </div>
+              {day.transportation.googleMapsUrl && (
+                <a 
+                  href={day.transportation.googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white border border-neutral-200 rounded-lg px-3 py-1 flex items-center hover:border-primary hover:text-primary transition-colors"
+                >
+                  <i className="fas fa-bus text-neutral-600 mr-1"></i>
+                  <span>Public Transport</span>
+                  <ExternalLink className="h-3 w-3 ml-1" />
+                </a>
+              )}
             </div>
           </div>
         </div>

@@ -1,75 +1,107 @@
-import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { Menu } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { useMobile } from "@/hooks/use-mobile";
 import { useState } from "react";
+import { Menu, X } from "lucide-react";
 
 export default function Header() {
-  const [open, setOpen] = useState(false);
+  const isMobile = useMobile();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const handleNavigate = () => {
-    setOpen(false);
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
   };
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-10">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+    <header className="bg-white border-b border-neutral-200 sticky top-0 z-50">
+      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <Link href="/">
           <a className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-              <i className="fas fa-route text-white text-xl"></i>
+            <div className="bg-primary rounded-full p-2 text-white">
+              <i className="fas fa-plane-departure text-xl"></i>
             </div>
-            <span className="text-2xl font-bold text-neutral-900">Travel<span className="text-primary">Plan</span></span>
+            <div className="font-bold text-xl text-neutral-900 flex items-center">
+              Travel<span className="text-primary">Buddy</span>
+              <span className="ml-1 text-yellow-500 animate-bounce">✈️</span>
+            </div>
           </a>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-6">
-          <Link href="/">
-            <a className="text-neutral-900 hover:text-primary transition font-medium">Home</a>
-          </Link>
-          <Link href="/saved-trips">
-            <a className="text-neutral-600 hover:text-primary transition">Saved Trips</a>
-          </Link>
-          <Link href="/explore">
-            <a className="text-neutral-600 hover:text-primary transition">Explore</a>
-          </Link>
-          <Link href="/help">
-            <a className="text-neutral-600 hover:text-primary transition">Help</a>
-          </Link>
-        </nav>
-
-        <div className="flex items-center space-x-4">
-          <Button className="hidden md:block">
-            Sign In
-          </Button>
-
-          {/* Mobile menu button */}
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right">
-              <nav className="flex flex-col space-y-4 mt-8">
-                <Link href="/" onClick={handleNavigate}>
-                  <a className="text-lg font-medium">Home</a>
-                </Link>
-                <Link href="/saved-trips" onClick={handleNavigate}>
-                  <a className="text-lg">Saved Trips</a>
-                </Link>
-                <Link href="/explore" onClick={handleNavigate}>
-                  <a className="text-lg">Explore</a>
-                </Link>
-                <Link href="/help" onClick={handleNavigate}>
-                  <a className="text-lg">Help</a>
-                </Link>
-                <Button className="mt-4 w-full">Sign In</Button>
-              </nav>
-            </SheetContent>
-          </Sheet>
+        {isMobile ? (
+          <div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleMobileMenu}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X /> : <Menu />}
+            </Button>
+            
+            {mobileMenuOpen && (
+              <div className="absolute top-full left-0 right-0 bg-white border-b border-neutral-200 py-4 px-4 shadow-md">
+                <nav className="flex flex-col space-y-4">
+                  <Link href="/">
+                    <a className="text-neutral-600 hover:text-primary transition-colors flex items-center">
+                      <i className="fas fa-home mr-2"></i> Home
+                    </a>
+                  </Link>
+                  <Link href="/saved-trips">
+                    <a className="text-neutral-600 hover:text-primary transition-colors flex items-center">
+                      <i className="fas fa-bookmark mr-2"></i> Saved Trips
+                    </a>
+                  </Link>
+                  <Link href="/about">
+                    <a className="text-neutral-600 hover:text-primary transition-colors flex items-center">
+                      <i className="fas fa-info-circle mr-2"></i> About
+                    </a>
+                  </Link>
+                  <div className="pt-2 border-t border-neutral-200">
+                    <Button className="w-full">
+                      <i className="fas fa-plus mr-2"></i> New Trip
+                    </Button>
+                  </div>
+                </nav>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="flex items-center space-x-6">
+            <nav className="flex items-center space-x-6">
+              <Link href="/">
+                <a className="text-neutral-600 hover:text-primary transition-colors flex items-center">
+                  <i className="fas fa-home mr-1"></i> Home
+                </a>
+              </Link>
+              <Link href="/saved-trips">
+                <a className="text-neutral-600 hover:text-primary transition-colors flex items-center">
+                  <i className="fas fa-bookmark mr-1"></i> Saved Trips
+                </a>
+              </Link>
+              <Link href="/about">
+                <a className="text-neutral-600 hover:text-primary transition-colors flex items-center">
+                  <i className="fas fa-info-circle mr-1"></i> About
+                </a>
+              </Link>
+            </nav>
+            <Button>
+              <i className="fas fa-plus mr-2"></i> New Trip
+            </Button>
+          </div>
+        )}
+      </div>
+      
+      {/* Fun travel-themed banner */}
+      <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 py-1 text-white text-center text-sm font-medium overflow-hidden">
+        <div className="animate-marquee whitespace-nowrap">
+          <span className="mx-2">✈️ Adventure awaits!</span>
+          <span className="mx-2">🏨 Find perfect stays</span>
+          <span className="mx-2">🍽️ Discover local cuisine</span>
+          <span className="mx-2">🗺️ Explore hidden gems</span>
+          <span className="mx-2">🏖️ Beach getaways</span>
+          <span className="mx-2">⛰️ Mountain escapes</span>
+          <span className="mx-2">🌆 City adventures</span>
+          <span className="mx-2">🚂 Epic journeys</span>
         </div>
       </div>
     </header>
