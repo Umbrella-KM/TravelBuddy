@@ -5,8 +5,8 @@ import { ZodError } from "zod";
 import { fromZodError } from "zod-validation-error";
 import axios from "axios";
 import { OSMService } from "./services/osm";
-import { TriposoService } from "./services/triposo";
-import { YelpService } from "./services/yelp";
+import { OpenTripMapService } from "./services/opentripmap";
+import { GeoapifyService } from "./services/geoapify";
 import { DatabaseStorage } from "./database-storage";
 
 // Create database storage instance
@@ -37,12 +37,12 @@ function generateBudgetAllocation(totalBudget: number, preferences: any) {
 
 async function generateMockAttraction(city: string, country?: string) {
   try {
-    // First try to get attractions from Triposo API
-    const locations = await TriposoService.getLocationInfo(city, country);
+    // First try to get attractions from OpenTripMap API
+    const locations = await OpenTripMapService.getLocationInfo(city, country);
     
     if (locations && locations.length > 0) {
       const locationId = locations[0].id;
-      const attractions = await TriposoService.getPointsOfInterest(locationId);
+      const attractions = await OpenTripMapService.getPointsOfInterest(locationId);
       
       if (attractions && attractions.length > 0) {
         // Get a random attraction from the results
@@ -51,7 +51,7 @@ async function generateMockAttraction(city: string, country?: string) {
       }
     }
     
-    // If Triposo fails, try OpenStreetMap as fallback
+    // If OpenTripMap fails, try OpenStreetMap as fallback
     const osmAttractions = await OSMService.getPointsOfInterest(city, country);
     
     if (osmAttractions && osmAttractions.length > 0) {
@@ -103,20 +103,15 @@ async function generateMockAttraction(city: string, country?: string) {
 
 async function generateMockAccommodation(city: string, country: string | undefined, type: string) {
   try {
-    // First try to get accommodations from Triposo API
-    const locations = await TriposoService.getLocationInfo(city, country);
+    // First try to get accommodations from Geoapify API
+    const accommodations = await GeoapifyService.getAccommodations(city, country, type);
     
-    if (locations && locations.length > 0) {
-      const locationId = locations[0].id;
-      const accommodations = await TriposoService.getAccommodations(locationId, type);
-      
-      if (accommodations && accommodations.length > 0) {
-        // Get a random accommodation from the results
-        return accommodations[Math.floor(Math.random() * accommodations.length)];
-      }
+    if (accommodations && accommodations.length > 0) {
+      // Get a random accommodation from the results
+      return accommodations[Math.floor(Math.random() * accommodations.length)];
     }
     
-    // If Triposo fails, try OpenStreetMap as fallback
+    // If Geoapify fails, try OpenStreetMap as fallback
     const osmAccommodations = await OSMService.getAccommodations(city, country, type);
     
     if (osmAccommodations && osmAccommodations.length > 0) {
@@ -154,45 +149,15 @@ async function generateMockAccommodation(city: string, country: string | undefin
 
 async function generateMockFood(city: string, country: string | undefined, type: string) {
   try {
-    // First try to get food places from Yelp API
-    let yelpRestaurants = [];
+    // First try to get food places from Geoapify API
+    const foodPlaces = await GeoapifyService.getFoodPlaces(city, country, type);
     
-    // Map our food type to Yelp price level
-    let yelpPrice;
-    switch (type) {
-      case "budget": yelpPrice = "1,2"; break;
-      case "fine": yelpPrice = "3,4"; break;
-      case "local": default: yelpPrice = "2,3"; break;
+    if (foodPlaces && foodPlaces.length > 0) {
+      // Get a random food place from the results
+      return foodPlaces[Math.floor(Math.random() * foodPlaces.length)];
     }
     
-    // Search term based on meal type and preferences
-    const searchTerm = "restaurants";
-    
-    yelpRestaurants = await YelpService.searchRestaurants(
-      `${city}${country ? ', ' + country : ''}`,
-      searchTerm,
-      yelpPrice
-    );
-    
-    if (yelpRestaurants && yelpRestaurants.length > 0) {
-      // Get a random restaurant from the results
-      return yelpRestaurants[Math.floor(Math.random() * yelpRestaurants.length)];
-    }
-    
-    // If Yelp fails, try Triposo API as fallback
-    const locations = await TriposoService.getLocationInfo(city, country);
-    
-    if (locations && locations.length > 0) {
-      const locationId = locations[0].id;
-      const foodPlaces = await TriposoService.getFoodPlaces(locationId, type);
-      
-      if (foodPlaces && foodPlaces.length > 0) {
-        // Get a random food place from the results
-        return foodPlaces[Math.floor(Math.random() * foodPlaces.length)];
-      }
-    }
-    
-    // If Triposo fails, try OpenStreetMap as second fallback
+    // If Geoapify fails, try OpenStreetMap as fallback
     const osmFoodPlaces = await OSMService.getFoodPlaces(city, country, type);
     
     if (osmFoodPlaces && osmFoodPlaces.length > 0) {
@@ -200,7 +165,7 @@ async function generateMockFood(city: string, country: string | undefined, type:
       return osmFoodPlaces[Math.floor(Math.random() * osmFoodPlaces.length)];
     }
   } catch (error) {
-    console.error('Error getting restaurants, falling back to defaults:', error);
+    console.error('Error getting food places, falling back to defaults:', error);
   }
   
   // Fallback to predefined food options if APIs fail or return no results
@@ -285,15 +250,15 @@ async function generateItinerary(formData: any) {
   const dailyActivities = Math.round(budgetAllocation.activities / days);
   const dailyTransportation = Math.round(budgetAllocation.transportation / days);
   
-  // Try to get location info from Triposo API
+  // Try to get location info from OpenTripMap API
   let locationId = null;
   try {
-    const locations = await TriposoService.getLocationInfo(destination, country);
+    const locations = await OpenTripMapService.getLocationInfo(destination, country);
     if (locations && locations.length > 0) {
       locationId = locations[0].id;
     }
   } catch (error) {
-    console.error('Error getting location info from Triposo:', error);
+    console.error('Error getting location info from OpenTripMap:', error);
   }
   
   // Generate itinerary days
@@ -310,30 +275,17 @@ async function generateItinerary(formData: any) {
     // Generate activities for the day based on preferences
     const dayActivities = [];
     
-    // If we have a valid locationId, try to get activities from Triposo
+    // If we have a valid locationId, try to get activities from OpenTripMap
     if (locationId) {
       try {
-        // Map our activity preferences to Triposo tags
+        // Map our activity preferences to OpenTripMap tags
         const activityTags = preferences.activities.map((activity: string) => {
-          switch (activity) {
-            case 'sightseeing': return 'sightseeing';
-            case 'cultural': return 'museums,culture';
-            case 'adventure': return 'adventure,outdoor';
-            case 'relaxation': return 'relaxation,spa';
-            case 'shopping': return 'shopping';
-            case 'nightlife': return 'nightlife';
-            case 'temple-visits': return 'temples,religion';
-            case 'heritage-sites': return 'heritage,history';
-            case 'ayurveda-wellness': return 'wellness,spa';
-            case 'wildlife-safari': return 'wildlife,nature';
-            case 'backwaters': return 'nature,water';
-            case 'street-food-tours': return 'food';
-            default: return activity;
-          }
+          // The mapping is handled inside the OpenTripMapService
+          return activity;
         });
         
-        // Get POIs from Triposo
-        const pois = await TriposoService.getPointsOfInterest(locationId, activityTags);
+        // Get POIs from OpenTripMap
+        const pois = await OpenTripMapService.getPointsOfInterest(locationId, activityTags);
         
         // Add unique POIs to activities
         if (pois && pois.length > 0) {
@@ -348,11 +300,11 @@ async function generateItinerary(formData: any) {
           }
         }
       } catch (error) {
-        console.error('Error getting activities from Triposo:', error);
+        console.error('Error getting activities from OpenTripMap:', error);
       }
     }
     
-    // If we couldn't get enough activities from Triposo, fill in with mock data
+    // If we couldn't get enough activities from OpenTripMap, fill in with mock data
     while (dayActivities.length < 2) {
       const mockActivity = await generateMockAttraction(destination, country);
       // Check if this activity is already in the list

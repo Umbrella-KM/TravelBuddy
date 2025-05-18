@@ -1,25 +1,23 @@
-# TravelBuddy - Smart Travel Itinerary Generator
+# TravelBuddy
 
-TravelBuddy is a web application that generates personalized travel itineraries based on destination and budget. It allocates your budget for accommodation, food, and activities, and provides links to Google Maps for places and points of interest along with their reviews.
+TravelBuddy is a travel planning application that helps users create personalized travel itineraries based on their preferences, budget, and destination.
 
 ## Features
 
-- **Destination-based Itinerary Generation**: Enter your destination and get a complete travel plan
-- **Budget Allocation**: Automatically allocates your budget for accommodation, food, and activities
-- **Personalized Preferences**: Choose your accommodation type, food preferences, and activity interests
-- **Google Maps Integration**: View locations on Google Maps with direct links
-- **Reviews and Ratings**: See ratings and reviews for accommodations and attractions
-- **Day-by-Day Planning**: Get a detailed day-by-day itinerary with all details
-- **Responsive Design**: Works on desktop, tablet, and mobile devices
+- Generate detailed travel itineraries for any destination
+- Customize your trip based on accommodation preferences, food preferences, and activities
+- Get budget breakdowns for your trip
+- View attractions, accommodations, and restaurants for your destination
+- Save and manage your itineraries
 
 ## Technologies Used
 
-- **Frontend**: React, TypeScript, TailwindCSS, Radix UI
+- **Frontend**: React, TypeScript, TailwindCSS
 - **Backend**: Node.js, Express
 - **APIs**:
-  - Triposo API for destination information and basic planning
-  - Yelp API for detailed restaurant filtering
-  - OpenStreetMap as a fallback for location data
+  - OpenTripMap API (for points of interest and attractions)
+  - Geoapify Places API (for accommodations and restaurants)
+  - OpenStreetMap (for mapping and additional data)
 
 ## Getting Started
 
@@ -32,7 +30,7 @@ TravelBuddy is a web application that generates personalized travel itineraries 
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/TravelBuddy.git
+   git clone https://github.com/your-username/TravelBuddy.git
    cd TravelBuddy
    ```
 
@@ -41,60 +39,47 @@ TravelBuddy is a web application that generates personalized travel itineraries 
    npm install
    ```
 
-3. Create a `.env` file in the root directory based on `.env.example`:
+3. Create a `.env` file in the root directory with the following variables:
    ```
-   cp .env.example .env
+   # Database connection string (if using a database)
+   DATABASE_URL=
+
+   # OpenTripMap API key (free tier)
+   OPENTRIPMAP_API_KEY=your_opentripmap_api_key
+
+   # Geoapify API key (free tier)
+   GEOAPIFY_API_KEY=your_geoapify_api_key
+
+   # Port for the server (optional)
+   PORT=3000
    ```
 
-4. Get API keys:
-   - Triposo API: Sign up at [https://www.triposo.com/api/](https://www.triposo.com/api/)
-   - Yelp API: Get your API key from [https://www.yelp.com/developers](https://www.yelp.com/developers)
+   You can get free API keys from:
+   - [OpenTripMap](https://opentripmap.io/product) - Free tier includes 1000 requests per day
+   - [Geoapify](https://www.geoapify.com/) - Free tier includes 3000 requests per day
 
-5. Add your API keys to the `.env` file:
-   ```
-   TRIPOSO_API_TOKEN=your_triposo_api_token
-   TRIPOSO_ACCOUNT=your_triposo_account
-   YELP_API_KEY=your_yelp_api_key
-   ```
-
-### Running the Application
-
-1. Start the development server:
+4. Start the development server:
    ```
    npm run dev
    ```
 
-2. Open your browser and navigate to `http://localhost:3000`
+5. Open your browser and navigate to `http://localhost:3000`
 
 ## Usage
 
-1. Enter your destination and travel dates
+1. Enter your destination, travel dates, and number of days
 2. Set your budget and preferences for accommodation, food, and activities
-3. Generate your personalized itinerary
-4. View and save your travel plan
-5. Click on Google Maps links to see locations
+3. Click "Generate Itinerary" to create your personalized travel plan
+4. View and save your itinerary
+5. Access your saved itineraries from the dashboard
 
-## Project Structure
+## API Endpoints
 
-```
-TravelBuddy/
-├── client/                 # Frontend React application
-│   ├── src/
-│   │   ├── components/     # React components
-│   │   ├── hooks/          # Custom React hooks
-│   │   ├── lib/            # Utility functions and API clients
-│   │   ├── pages/          # Page components
-│   │   └── types/          # TypeScript type definitions
-├── server/                 # Backend Express server
-│   ├── services/           # API service integrations
-│   │   ├── triposo.ts      # Triposo API service
-│   │   ├── yelp.ts         # Yelp API service
-│   │   └── osm.ts          # OpenStreetMap service (fallback)
-│   ├── routes.ts           # API routes
-│   └── index.ts            # Server entry point
-└── shared/                 # Shared code between client and server
-    └── schema.ts           # Data schemas and types
-```
+- `GET /api/destinations` - Get a list of destinations
+- `POST /api/generate-itinerary` - Generate a travel itinerary
+- `POST /api/save-itinerary` - Save an itinerary
+- `GET /api/itineraries` - Get all saved itineraries
+- `GET /api/itineraries/:id` - Get a specific itinerary by ID
 
 ## License
 
@@ -102,8 +87,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgements
 
-- [Triposo API](https://www.triposo.com/api/) for destination data
-- [Yelp API](https://www.yelp.com/developers) for restaurant information
-- [OpenStreetMap](https://www.openstreetmap.org/) for geographic data
-- [Unsplash](https://unsplash.com/) for placeholder images
+- [OpenTripMap](https://opentripmap.io) for providing points of interest data
+- [Geoapify](https://www.geoapify.com) for providing places data
+- [OpenStreetMap](https://www.openstreetmap.org) for mapping data
 
