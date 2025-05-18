@@ -1,24 +1,25 @@
-# TravelBuddy - Smart Travel Itinerary Generator
+# TravelPlan - Comprehensive Travel Itinerary Generator
 
-TravelBuddy is a web application that generates personalized travel itineraries based on destination and budget. It allocates your budget for accommodation, food, and activities, and provides links to Google Maps for places and points of interest along with their reviews.
+TravelPlan is a web application that generates personalized travel itineraries based on destination, duration, and budget. It creates a comprehensive plan showing budget breakdown and provides a complete itinerary with Google Maps links for accommodations, restaurants, and attractions along with customer reviews.
 
 ## Features
 
-- **Destination-based Itinerary Generation**: Enter your destination and get a complete travel plan
-- **Budget Allocation**: Automatically allocates your budget for accommodation, food, and activities
+- **Comprehensive Budget Breakdown**: Detailed allocation of your budget with visualizations
+- **Complete Itinerary Generation**: Enter your destination and get a day-by-day travel plan
+- **Google Maps Integration**: View all locations on Google Maps with direct links
+- **Customer Reviews**: See ratings and reviews for accommodations, restaurants, and attractions
 - **Personalized Preferences**: Choose your accommodation type, food preferences, and activity interests
-- **Google Maps Integration**: View locations on Google Maps with direct links
-- **Reviews and Ratings**: See ratings and reviews for accommodations and attractions
-- **Day-by-Day Planning**: Get a detailed day-by-day itinerary with all details
+- **Interactive UI**: User-friendly interface with tabs and detailed information
 - **Responsive Design**: Works on desktop, tablet, and mobile devices
 
 ## Technologies Used
 
 - **Frontend**: React, TypeScript, TailwindCSS, Radix UI
 - **Backend**: Node.js, Express
+- **Database**: PostgreSQL with Drizzle ORM
 - **APIs**:
-  - Triposo API for destination information and basic planning
-  - Yelp API for detailed restaurant filtering
+  - Triposo API for destination information and points of interest
+  - Yelp API for restaurant information and reviews
   - OpenStreetMap as a fallback for location data
 
 ## Getting Started
@@ -27,13 +28,14 @@ TravelBuddy is a web application that generates personalized travel itineraries 
 
 - Node.js (v14 or higher)
 - npm or yarn
+- PostgreSQL database (or use the provided Neon serverless option)
 
 ### Installation
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/TravelBuddy.git
-   cd TravelBuddy
+   git clone https://github.com/yourusername/TravelPlan.git
+   cd TravelPlan
    ```
 
 2. Install dependencies:
@@ -55,6 +57,7 @@ TravelBuddy is a web application that generates personalized travel itineraries 
    TRIPOSO_API_TOKEN=your_triposo_api_token
    TRIPOSO_ACCOUNT=your_triposo_account
    YELP_API_KEY=your_yelp_api_key
+   DATABASE_URL=your_database_connection_string
    ```
 
 ### Running the Application
@@ -71,13 +74,14 @@ TravelBuddy is a web application that generates personalized travel itineraries 
 1. Enter your destination and travel dates
 2. Set your budget and preferences for accommodation, food, and activities
 3. Generate your personalized itinerary
-4. View and save your travel plan
-5. Click on Google Maps links to see locations
+4. View the comprehensive budget breakdown with visualizations
+5. Explore the detailed day-by-day itinerary with Google Maps links and reviews
+6. Save or share your travel plan
 
 ## Project Structure
 
 ```
-TravelBuddy/
+TravelPlan/
 ├── client/                 # Frontend React application
 │   ├── src/
 │   │   ├── components/     # React components
@@ -102,8 +106,9 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgements
 
-- [Triposo API](https://www.triposo.com/api/) for destination data
-- [Yelp API](https://www.yelp.com/developers) for restaurant information
+- [Triposo API](https://www.triposo.com/api/) for destination data and points of interest
+- [Yelp API](https://www.yelp.com/developers) for restaurant information and reviews
 - [OpenStreetMap](https://www.openstreetmap.org/) for geographic data
+- [Google Maps](https://maps.google.com/) for location mapping
 - [Unsplash](https://unsplash.com/) for placeholder images
 
