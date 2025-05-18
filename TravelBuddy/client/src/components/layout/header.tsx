@@ -21,7 +21,7 @@ export default function Header() {
               <i className="fas fa-plane-departure text-xl"></i>
             </div>
             <div className="font-bold text-xl text-neutral-900 flex items-center">
-              Travel<span className="text-primary">Buddy</span>
+              Travel<span className="text-primary">Plan</span>
               <span className="ml-1 text-yellow-500 animate-bounce">✈️</span>
             </div>
           </a>

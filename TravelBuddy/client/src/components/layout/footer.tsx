@@ -11,7 +11,7 @@ export default function Footer() {
                 <i className="fas fa-plane-departure text-xl"></i>
               </div>
               <div className="font-bold text-xl text-white flex items-center">
-                Travel<span className="text-primary">Buddy</span>
+                Travel<span className="text-primary">Plan</span>
               </div>
             </div>
             <p className="text-neutral-400 mb-4">
@@ -110,7 +110,7 @@ export default function Footer() {
         
         <div className="border-t border-neutral-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-neutral-400 text-sm mb-4 md:mb-0">
-            © {new Date().getFullYear()} TravelBuddy. All rights reserved.
+            © {new Date().getFullYear()} TravelPlan. All rights reserved.
           </p>
           <div className="flex space-x-6">
             <Link href="/privacy">

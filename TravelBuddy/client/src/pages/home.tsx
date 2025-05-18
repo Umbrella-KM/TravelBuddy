@@ -114,7 +114,7 @@ export default function Home() {
         </h1>
         <p className="text-lg text-neutral-600 max-w-2xl mx-auto mb-8">
           Enter your destination and budget to get a complete itinerary with accommodations, 
-          dining options, attractions, and more.
+          dining options, attractions, and more - all with Google Maps links and customer reviews.
         </p>
         <div className="flex justify-center">
           <Button 
@@ -213,12 +213,12 @@ export default function Home() {
           <Card className="bg-white">
             <CardContent className="p-6">
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                <i className="fas fa-lightbulb text-primary text-xl"></i>
+                <i className="fas fa-map-marked-alt text-primary text-xl"></i>
               </div>
-              <h3 className="text-xl font-medium text-neutral-900 mb-2">Personalized Recommendations</h3>
+              <h3 className="text-xl font-medium text-neutral-900 mb-2">Interactive Maps</h3>
               <p className="text-neutral-600">
-                Get customized suggestions based on your preferences, travel style, and interests, 
-                not generic tourist traps.
+                Every location in your itinerary comes with Google Maps links, making it easy to navigate 
+                and explore your surroundings during your trip.
               </p>
             </CardContent>
           </Card>
@@ -226,12 +226,12 @@ export default function Home() {
           <Card className="bg-white">
             <CardContent className="p-6">
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                <i className="fas fa-map-marked-alt text-primary text-xl"></i>
+                <i className="fas fa-star text-primary text-xl"></i>
               </div>
-              <h3 className="text-xl font-medium text-neutral-900 mb-2">Complete Itineraries</h3>
+              <h3 className="text-xl font-medium text-neutral-900 mb-2">Verified Reviews</h3>
               <p className="text-neutral-600">
-                Everything in one place - accommodations, meals, attractions, and transportation, 
-                all organized by day and optimized for efficiency.
+                Make informed decisions with real customer reviews for accommodations, restaurants, 
+                and attractions included in your personalized itinerary.
               </p>
             </CardContent>
           </Card>
